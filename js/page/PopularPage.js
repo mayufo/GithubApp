@@ -15,27 +15,39 @@ import NavigationUtil from '../navigation/NavigationUtil'
 
 type Props = {};
 export default class PopularPage extends Component<Props> {
-    render() {
-        const TabNavigator = createMaterialTopTabNavigator({
-            PopularTab1: {
-                screen: PopularTab,
+    constructor(props) {
+        super(props)
+        this.tabNames = ['Java', 'Android', 'iOS', 'React', 'React Native', 'PHP']
+    }
+
+    _getTabs () {
+        const tabs = {}
+        this.tabNames.forEach((item, index) => {
+            tabs[`tab${index}`] = {
+                screen: props => <PopularTab {...props} tabLabel={item}/>,
                 navigationOptions: {
-                    title: 'Tab1'
-                }
-            },
-            PopularTab2: {
-                screen: PopularTab,
-                navigationOptions: {
-                    title: 'Tab2'
-                }
-            },
-            PopularTab3: {
-                screen: PopularTab,
-                navigationOptions: {
-                    title: 'Tab3'
+                    title: item
                 }
             }
         })
+        return tabs
+    }
+    render() {
+        const TabNavigator = createMaterialTopTabNavigator(
+            this._getTabs(),
+            {
+                tabBarOptions: {
+                    tabStyle: styles.tabStyle,
+                    upperCaseLabel: false,  // 标签是否大写
+                    scrollEnabled: true,  // 选项卡滚动
+                    style: {
+                        backgroundColor: '#678'
+                    },
+                    indicatorStyle: styles.indicatorStyle,   // 标签指示器样式
+                    labelStyle: styles.labelStyle    // 文字样式
+                }
+            }
+            )
         const Top = createAppContainer(TabNavigator)
         return (
             <View style={{flex: 1, marginTop: 30}}>
@@ -78,4 +90,17 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    tabStyle: {
+        minWidth: 50
+    },
+    indicatorStyle: {
+        height: 2,
+        backgroundColor: 'white'
+    },
+    labelStyle: {
+        fontSize: 13,
+        marginTop: 6,
+        marginBottom: 6,
+        color: 'red'
+    }
 });
