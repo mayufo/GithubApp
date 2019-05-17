@@ -20,6 +20,7 @@ import FavoritePage from '../page/FavoritePage'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AntIcons from 'react-native-vector-icons/AntDesign'
 import NavigationUtil from "../navigation/NavigationUtil";
+import {BottomTabBar} from 'react-navigation-tabs'
 
 type Props = {};
 
@@ -83,10 +84,19 @@ export default class DynamicTabNavigator extends Component<Props> {
         super(props)
         console.disableYellowBox = true
     }
+    // _tabNavigator() {
+    //     const {PopularPage, TrendingPage, FavoritePage, MyPage} = TABS
+    //     const tabs = {PopularPage, TrendingPage, FavoritePage}   // 根据需要定制显示的tab
+    //     const BottomNavigator = createBottomTabNavigator(tabs)
+    //     return createAppContainer(BottomNavigator)
+    // }
     _tabNavigator() {
         const {PopularPage, TrendingPage, FavoritePage, MyPage} = TABS
-        const tabs = {PopularPage, TrendingPage, FavoritePage}   // 根据需要定制显示的tab
-        const BottomNavigator = createBottomTabNavigator(tabs)
+        const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage}   // 根据需要定制显示的tab
+        PopularPage.navigationOptions.tabBarLabel = '12'
+        const BottomNavigator = createBottomTabNavigator(tabs, {
+            tabBarComponent: TabBarComponent
+        })
         return createAppContainer(BottomNavigator)
     }
 
@@ -95,6 +105,30 @@ export default class DynamicTabNavigator extends Component<Props> {
         NavigationUtil.navigation = this.props.navigation
         const Tab = this._tabNavigator()
         return <Tab/>
+    }
+}
+
+class TabBarComponent extends React.Component{
+    constructor(props) {
+        super(props)
+        this.theme = {
+            tintColor: props.activeTintColor,
+            updateTime: new Date().getTime()
+        }
+    }
+    render() {
+        const {routes, index} = this.props.navigation.state
+        // 以最新的更新时间为主，防止被其他tab之前的修改覆盖掉
+        if (routes[index].params) {
+            const {theme} = routes[index].params;
+            if (theme && theme.updateTime > this.theme.updateTime) {
+                this.theme = theme
+            }
+        }
+        return <BottomTabBar
+            {...this.props}
+            activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+        />
     }
 }
 
