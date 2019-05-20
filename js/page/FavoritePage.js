@@ -4,23 +4,25 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
+import {connect}from 'react-redux'
+import actions from '../action/index'
 
 
 type Props = {};
-export default class FavoritePage extends Component<Props> {
+class FavoritePage extends Component<Props> {
     render() {
-        const {navigation} = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>DetailPage</Text>
                 <Button title="改变主题色"
                         onPress={() => {
-                            navigation.setParams({
-                                theme: {
-                                    tintColor: 'pink',
-                                    updateTime: new Date().getTime()
-                                }
-                            })
+                            // navigation.setParams({
+                            //     theme: {
+                            //         tintColor: 'red',
+                            //         updateTime: new Date().getTime()
+                            //     }
+                            // })
+                            this.props.onThemeChange('#99268a')
                         }}/>
             </View>
         );
@@ -45,3 +47,14 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 });
+
+const mapStateToProps = state => {
+    return {}
+}
+
+const mapDispatchTopProps = dispatch => ({
+    onThemeChange: theme => dispatch(actions.onThemeChange(theme))
+})
+
+
+export default connect(mapStateToProps, mapDispatchTopProps)(FavoritePage)

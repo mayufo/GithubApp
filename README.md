@@ -2,6 +2,7 @@
 
 
 ## react-navigation补充
+
 [react-navigation](https://reactnavigation.org/docs/en/getting-started.html)
 
 `yarn add react-navigation`
@@ -33,5 +34,20 @@ yarn add react-navigation-tabs
 yarn add react-native-reanimated react-native-gesture-handler
 react-native link react-native-reanimated
 react-native link react-native-gesture-handler
+```
+
+
+## redux
 
 ```
+npm install --save redux
+
+npm install --save react-redux
+npm install --save-dev redux-devtools
+
+```
+
+
+react-native 与 react-navigation组合
+
+`npm install --save react-navigation-redux-helpers`
