@@ -3,22 +3,6 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {
-    createStackNavigator,
-    createMaterialTopTabNavigator,
-    createBottomTabNavigator,
-    createSwitchNavigator,
-    createAppContainer
-} from 'react-navigation'
-
-import PopularPage from './PopularPage'
-import MyPage from './MyPage'
-import TrendingPage from './TrendingPage'
-import FavoritePage from './FavoritePage'
-
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import AntIcons from 'react-native-vector-icons/AntDesign'
 import NavigationUtil from "../navigation/NavigationUtil";
 import DynamicTabNavigator from "../navigation/DynamicTabNavigator";
 import {BackHandler} from "react-native";
